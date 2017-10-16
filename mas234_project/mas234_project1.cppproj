@@ -167,7 +167,7 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MAS234lab.cpp">
+    <Compile Include="MAS234Lab.cpp">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
