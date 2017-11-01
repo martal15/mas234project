@@ -3,41 +3,29 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+//1.7.4 Button and LED wo/interrupt
+
 int main(void)
 {
-	//Setting port D0 to be an output
+	//Setting port D0 to be an output, and all the other pins in port D to be inputs
 	DDRD = (1 << PD0);
 	
 	//Setting port D0 to be low as initial state
 	PORTD = 0x00;
 	
-	//
 	while(1)
 	{
-		//A for loop that incrementally increases how much of the time the LED should stay on
-		for(int p = 0; p < 100; p++)
+		//If PD5 is high, the button is not pressed
+		if((PIND & (1 << PD5)))
 		{
-			//A for loop that acts as a counter in an DAC
-			for(int i = 0; i < 100; i++)
-			{
-				//If the counter "i" is more than "p", turn on port D0. If not turn it off
-				PORTD = ((p < i) << PD0);
-				//Delay for 100us, this should give a frequency of 50Hz
-				_delay_us(100);
-			}
+			//Set PD0 low
+			PORTD &= ~(1 << PD0);
 		}
-		
-		//A for loop that incrementally decreases how much of the time the LED should stay on
-		for(int p = 100; p > 0; p--)
+		//Else if PD5 is low, the button is pressed
+		else
 		{
-			//A for loop that acts as a counter in an ADC
-			for(int i = 0; i < 100; i++)
-			{
-				//If the counter "i" is more than "p", turn on port D0. If not turn it off
-				PORTD = ((p < i) << PD0);
-				//Delay for 100us, this should give a frequency of 50Hz
-				_delay_us(100);
-			}
+			//Set PD0 high
+			PORTD |= (1 << PD0);
 		}
 	}
 }
