@@ -45,7 +45,8 @@ int main(void)
 		uint8_t p = ADCH;
 		
 		//PWM output on PD0 according to the analog value
-		for(int i = 0; i < 256; i++) {
+		for(int i = 0; i < 256; i++)
+		{
 			PORTD = ((p > i) << PD0);
 			_delay_us(50);
 		}
